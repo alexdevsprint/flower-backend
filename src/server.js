@@ -15,10 +15,18 @@ export const startServer = () => {
 
   app.use(router);
 
+ 
+
   app.get("/", (req, res) => {
     res.json({
       message: "Hello world!",
     });
+  });
+
+   app._router.stack.forEach(r => {
+    if (r.route && r.route.path) {
+      console.log(`${Object.keys(r.route.methods).join(', ').toUpperCase()} ${r.route.path}`);
+    }
   });
 
   app.use((req, res, next) => {
