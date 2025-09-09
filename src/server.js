@@ -23,11 +23,15 @@ export const startServer = () => {
     });
   });
 
-   app._router.stack.forEach(r => {
+ if (app._router && app._router.stack) {
+  app._router.stack.forEach(r => {
     if (r.route && r.route.path) {
       console.log(`${Object.keys(r.route.methods).join(', ').toUpperCase()} ${r.route.path}`);
     }
   });
+} else {
+  console.log('app._router is not initialized yet');
+}
 
   app.use((req, res, next) => {
     res.status(404).json({
